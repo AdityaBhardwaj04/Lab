@@ -1,0 +1,65 @@
+
+
+int search(struct node *ptr, int key)
+{
+    if (ptr == NULL)
+        return 0;
+    if (ptr->data == key)
+    {
+        printf("Key found!");
+        return 1;
+    }
+    else if (ptr->data > key)
+    {
+        search(ptr->left, key);
+    }
+    else
+    {
+        search(ptr->right, key);
+    }
+}
+void printCurrentLevel(struct node* root, int level);
+int height(struct node* node);
+struct node* newNode(int data);
+ 
+/* Function to print level order traversal a tree*/
+void printLevelOrder(struct node* root)
+{
+    int h = height(root);
+    int i;
+    for (i = 1; i <= h; i++)
+        printCurrentLevel(root, i);
+}
+ 
+/* Print nodes at a current level */
+void printCurrentLevel(struct node* root, int level)
+{
+    if (root == NULL)
+        return;
+    if (level == 1)
+        printf("%d ", root->data);
+    else if (level > 1) {
+        printCurrentLevel(root->left, level - 1);
+        printCurrentLevel(root->right, level - 1);
+    }
+}
+ 
+/* Compute the "height" of a tree -- the number of
+    nodes along the longest path from the root node
+    down to the farthest leaf node.*/
+int height(struct node* node)
+{
+    if (node == NULL)
+        return 0;
+    else {
+        /* compute the height of each subtree */
+        int lheight = height(node->left);
+        int rheight = height(node->right);
+ 
+        /* use the larger one */
+        if (lheight > rheight)
+            return (lheight + 1);
+        else
+            return (rheight + 1);
+    }
+}
